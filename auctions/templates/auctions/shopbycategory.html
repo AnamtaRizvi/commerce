@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+    <h2>Shop By Category</h2><hr>
+    <div class="categbox">
+     {% for category in categories %}
+        
+            <a href="{% url  'categories' category.code %}"  class="login"> <div class="box">
+                <img src="media/category/{{ category.category }}.png" class="boximg" ><br><div style="color:aliceblue ;" >{{ category }} </div></a></div>
+     </a>
+     {% endfor %}
+    </div>
+     
+     
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

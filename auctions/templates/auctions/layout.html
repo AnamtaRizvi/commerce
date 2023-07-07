@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+       <div class="container">
+        <div class="header">
+            <h1>Auctions</h1>  
+        </div>
+        <div class="foo">
+            {% if user.is_authenticated %}
+            <h2>Signed in as <strong>{{ user.username }}</strong>.</h2>
+                 <p>   <div class="added"><a class="login" href="create">Add listing</a> &emsp;
+                    <a class="login" href="{% url 'logout' %}">Log Out</a></div></p>
+                   
+            {% else %}
+            <h2>Not signed in.</h2>
+           
+           <p> <div class="added"><a href="{% url 'login' %}" class="login">Log In</a> &emsp;
+            <a href="{% url 'register' %}" class="login">Register</a></div></p>
+            {% endif %}   
+           </div>
+        <div class="side">
+          <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+            <ul class="nav flex-column text-white w-100">
+              <a  class="nav-link h3 text-white my-2">
+                MENU
+              </a>
+              <a  href="{% url 'index' %}">
+              <li  class="nav-link">
+                <span class="mx-2">Home</span></li></a>
+
+              <a href="{% url 'shopbycategory' %}">
+              <li  class="nav-link">
+                <span class="mx-2">Categories</span>
+              </li></a>
+
+
+              <a  href="{% url 'watch' %}">
+              <li class="nav-link">
+                <span class="mx-2">watchlist</span>
+              </li></a>
+
+
+              <a  href= "{% url 'mylist' %}">
+              <li  class="nav-link">
+                <span class="mx-2">My Listings</span>
+              </li></a>
+            </ul>
+          
+           <hr>
+          </div>
+        </div>
+        <div class="con">
+          {% block body %}
+           {% endblock %}
+        </div>
+      </div>
+</body>
+</html>

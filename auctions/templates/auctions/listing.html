@@ -1,0 +1,86 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="whole">
+    <div class="item-img"><div class="listblock"><img src="media/{{ listing.listimage }}" class="listimage" ></div></div>
+    
+<div class="item-info">
+    <div class="title">{{ listing.name }}</div>
+<div class="info"><strong>Category:</strong> {{ listing.type }} <br>
+    <strong> Status: </strong>{{ listing.status }}<br>
+<strong>Base Bid:</strong> {{ listing.minp }}Rs</div>
+<div class="bid"><strong>current Bid:</strong> {{ listing.maxp }}Rs</div>
+       <div class="added"><strong>Added on:</strong> {{ listing.date }}
+        <strong>Added By: </strong> {{ listing.added_by }}</div>
+        <div ><form action=" {% url 'add to watchlist' listing.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="ADDWATCHLIST" value="ADD TO WATCHLIST">WATCHLIST
+            </form>
+            </div>
+</div>
+<div class="item-des"><h4> Description</h4><hr> {{ listing.description }}</div>
+
+
+<div class="item-bid">
+    <h4>Biddings</h4><hr>
+    <div class="scroll">
+{% for bid in biddings %}
+      
+        {{ bid.added_by }}:  {{ bid.price }}<hr>
+        {% endfor %}
+    </div> 
+    {{ count }} bid(s) so far.
+   {% if listing.status == "Active" %}
+    <h4>Add Bid</h4>
+    <form action=" {% url 'addbid' listing.id %}" method="POST">
+        {% csrf_token %}
+        <input type="number" name="bid" placeholder="ADD BID" min="{{ listing.maxp }}">
+        <input type="submit" name="submit">
+    </form><br>
+    {% if user == listing.added_by %}
+<form action=" {% url 'closebid' listing.id %}" method="POST" >
+       {% csrf_token %}
+<button type="submit" name="close" value="Deactivate">CLOSE</button>
+</form>
+{% endif %}
+{% else %}
+
+<div class="item-winner">
+
+{% if user == wins.winner.added_by %}
+    The Winner is you
+    <form action="{% url 'checkout' listing.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">proceed to buy</button>
+    </form>
+    {% else %}
+    The bid is closed.
+    {% endif %}
+</div>     
+{% endif %}
+</div>
+
+<div class="item-comment">
+    <h4>Comments</h4>
+    <hr>
+    <div class="scrollcom">
+    {% for c in comments %}
+    <span>{{ c.added_by }}: {{ c.comment }}
+        
+        <hr></span>
+        {% endfor %}
+</div>
+
+<h4>Add Your Comments here</h4>
+    <hr>
+    <form action=" {% url 'addcomment' listing.id %}" method="POST" >
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="ADD COMMENT">
+        <input type="submit" name="submit">
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

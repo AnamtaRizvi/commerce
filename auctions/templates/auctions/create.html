@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="cf">
+    <h3> Add Listings </h3></div>
+    <hr>
+   
+
+      <form action="{% url 'createlisting' %}" enctype="multipart/form-data" method="POST" style="font-weight:bold;" >
+        {% csrf_token %}
+        <div class="createform">
+        <div class="left1">Name:<br><input type="text" name="title"  placeholder="Name"></div>
+        <div class="right1">Description:<br> <input type="text" name="Description" placeholder="description"></div>
+        <div class="right2">Image:<br> <input type="file" name="X"  accept="image/*"></div>
+       <div class="left2"> Category:<br> <input name="category" list="category" placeholder="Category">
+        <datalist id="category">
+            {% for categ in category %}
+                <option value="{{ categ.id }}">{{ categ.category }}</option>
+            {% endfor %}</div>
+            <div class="right3">Status<br>
+                <label for="active">Active</label> <input type="radio" name="st" value="Active" id="active" > 
+                <label for="deactivate">Deactivate</label> <input type="radio" name="st" value="Deactivate" id="deactivate">     
+            </div>
+            <div class="left3">
+        Minimum bid:<br><input type="text" name="minp" placeholder="Minimum Price"></div>
+    </div>
+    <input type="submit" value="submit" class="done"></form>
+      
+
+{% endblock %}

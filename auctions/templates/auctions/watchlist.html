@@ -1,0 +1,28 @@
+
+{% extends "auctions/layout.html" %}
+    
+    {% block body %}
+    <h2> WatchList </h2>
+    <hr>
+     {% for listing in listings %}
+        <a href="{% url  'listing' listing.id %}">
+            <div class="block">
+                <div><img src="media/{{ listing.item.listimage }}" class="image" ></div>
+            <div class="data" >
+                <pre>    
+            <strong>Name:</strong>{{ listing.item.name }}
+            <strong>Added on:</strong>  {{ listing.item.date }}
+            <strong>Added By: </strong> {{ listing.item.added_by }}
+            <strong>Category:</strong>  {{ listing.item.type }}
+
+            <div class="bid"><strong>current Bid:</strong> {{ listing.item.maxp }}Rs</div>
+            </pre>
+                 </div>
+            </div>
+            <hr>
+</a>
+{% empty %}
+         You havent posted anything yet
+     {% endfor %}
+     
+{% endblock %}
